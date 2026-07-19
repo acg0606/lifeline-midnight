@@ -7,13 +7,13 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const serif = DM_Serif_Display({ weight: "400", subsets: ["latin"], variable: "--font-serif" });
 
 export const metadata: Metadata = {
-  title: "Lifeline — apoio privado para recomeçar",
-  description: "Círculos privados de recuperação financeira, verificados pela Midnight.",
+  title: "Lifeline — private support to start over",
+  description: "Private financial recovery circles, verified by Midnight.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="en">
       <body className={`${manrope.variable} ${serif.variable}`}>
         {children}
         <Toaster position="top-center" richColors />

@@ -47,9 +47,9 @@ Open `http://localhost:3000`.
 
 1. Start the local proof server and open the app in Chrome.
 2. Connect Lace on Midnight Preprod.
-3. Click **Publicar na Preprod** and approve the wallet operations.
+3. Click **Publish on Preprod** and approve the wallet operations.
 4. Copy the encrypted supporter invitation.
-5. Use **Ver como apoiador**, open **Votação**, and prioritize one need.
+5. Use **View as supporter**, open **Voting**, and prioritize one need.
 6. Attempt a second vote to demonstrate nullifier rejection.
 7. Return to beneficiary mode and close the cycle.
 8. Show the transaction receipt, verified ledger state, and privacy page.

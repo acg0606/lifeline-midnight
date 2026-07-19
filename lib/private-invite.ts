@@ -49,7 +49,7 @@ export async function readPrivateInvite(hashOrUrl: string): Promise<LifelineInvi
   const value = new URLSearchParams(hash.replace(/^#/u, "")).get("lifeline");
   if (!value) return null;
   const [secretValue, ivValue, encryptedValue] = value.split(".");
-  if (!secretValue || !ivValue || !encryptedValue) throw new Error("O convite privado está incompleto.");
+  if (!secretValue || !ivValue || !encryptedValue) throw new Error("The private invite is incomplete.");
   try {
     const key = await crypto.subtle.importKey("raw", toArrayBuffer(base64UrlToBytes(secretValue)), "AES-GCM", false, ["decrypt"]);
     const decrypted = await crypto.subtle.decrypt(
@@ -59,11 +59,11 @@ export async function readPrivateInvite(hashOrUrl: string): Promise<LifelineInvi
     );
     const invite = JSON.parse(new TextDecoder().decode(decrypted)) as LifelineInvite;
     if (invite.version !== 1 || !invite.state || !Array.isArray(invite.state.needs)) {
-      throw new Error("Formato de convite não reconhecido.");
+      throw new Error("Unrecognized invite format.");
     }
     return invite;
   } catch (error) {
-    if (error instanceof Error && error.message.startsWith("Formato")) throw error;
-    throw new Error("Não foi possível abrir o convite. Verifique se o link foi copiado por inteiro.");
+    if (error instanceof Error && error.message.startsWith("Unrecognized")) throw error;
+    throw new Error("Could not open the invite. Make sure the full link was copied.");
   }
 }
