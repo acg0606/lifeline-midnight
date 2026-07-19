@@ -1,0 +1,12 @@
+node_modules
+.next
+.vercel
+.env*.local
+.midnight-state.json
+coverage
+*.log
+
+dist
+public/keys
+public/zkir
+*.zip

@@ -1,0 +1,78 @@
+/**
+ * Lifeline — privacy-preserving financial recovery circle for Midnight.
+ *
+ * Privacy model:
+ * - a need is represented publicly only by a salted Bytes<32> commitment;
+ * - supporter identity is derived from a local secret witness;
+ * - a cycle-scoped nullifier prevents a supporter voting twice;
+ * - only the aggregate weight per need is stored on the public ledger.
+ *
+ * The description, creditor, amount, due date, supporter identity and local
+ * secret never become ledger fields.
+ */
+
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger cycleId: Bytes<32>;
+export ledger cycleOpen: Boolean;
+export ledger cycleNumber: Counter;
+export ledger registeredNeeds: Map<Bytes<32>, Boolean>;
+export ledger usedNullifiers: Map<Bytes<32>, Boolean>;
+export ledger voteTotals: Map<Bytes<32>, Counter>;
+export ledger totalVotingWeight: Counter;
+export ledger winningNeed: Bytes<32>;
+
+witness localMemberSecret(): Bytes<32>;
+witness localNeedCommitment(): Bytes<32>;
+witness localVotingWeight(): Uint<16>;
+
+export circuit memberNullifier(
+  secret: Bytes<32>,
+  currentCycle: Bytes<32>
+): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([
+    pad(32, "lifeline:vote:"),
+    secret,
+    currentCycle
+  ]);
+}
+
+export circuit createCycle(newCycleId: Bytes<32>): [] {
+  assert(!cycleOpen, "a cycle is already open");
+  cycleId = disclose(newCycleId);
+  cycleOpen = true;
+  cycleNumber.increment(1);
+}
+
+export circuit registerNeed(needCommitment: Bytes<32>): [] {
+  assert(cycleOpen, "cycle is closed");
+  assert(!registeredNeeds.member(disclose(needCommitment)), "need already registered");
+  registeredNeeds.insert(disclose(needCommitment), true);
+}
+
+export circuit castPrivateVote(): [] {
+  assert(cycleOpen, "cycle is closed");
+
+  const secret = localMemberSecret();
+  const need = localNeedCommitment();
+  const rawWeight = localVotingWeight();
+  const nullifier = memberNullifier(secret, cycleId);
+
+  assert(registeredNeeds.member(disclose(need)), "unknown need");
+  assert(!usedNullifiers.member(disclose(nullifier)), "credential already used in this cycle");
+  assert(rawWeight > 0, "voting weight must be positive");
+  assert(rawWeight <= 100, "voting weight exceeds the democratic cap");
+
+  usedNullifiers.insert(disclose(nullifier), true);
+  voteTotals.lookup(disclose(need)).increment(disclose(rawWeight));
+  totalVotingWeight.increment(disclose(rawWeight));
+}
+
+export circuit closeCycle(winnerCommitment: Bytes<32>): [] {
+  assert(cycleOpen, "cycle is already closed");
+  assert(registeredNeeds.member(disclose(winnerCommitment)), "unknown winning need");
+  winningNeed = disclose(winnerCommitment);
+  cycleOpen = false;
+}
