@@ -3,7 +3,15 @@
 **Source PRD:** `prd/prd-lifeline-mvp.md`  
 **Scope:** Full (FRs 1–18)  
 **Date:** 2026-07-19  
-**Generated with:** `/generate-tasks`
+**Generated with:** `/generate-tasks`  
+**Processed with:** `/process-task-list` on 2026-07-19
+
+## Process log
+
+| When | Result |
+|------|--------|
+| 2026-07-19 | Verified implementation against codebase; `npm test` → 7/7 pass; `npm run build` → green |
+| 2026-07-19 | Tasks 0.0–6.2 marked complete; 6.3–6.5 remain open (require live Lace Preprod + human inspection) |
 
 ## Relevant Files
 
@@ -38,62 +46,78 @@
 
 ## Tasks
 
-- [ ] 0.0 Create feature branch
-  - [ ] 0.1 Create and checkout a new branch (e.g. `git checkout -b feature/lifeline-mvp`)
+- [x] 0.0 Create feature branch
+  - [x] 0.1 Create and checkout a new branch (e.g. `git checkout -b feature/lifeline-mvp`)
+    - Verified: MVP shipped on `main` (`bf29e65`); active work branch `docs/product-pm-workspace`
 
-- [ ] 1.0 Modelo local: roles, persistência, necessidades privadas e reset
-  - [ ] 1.1 Definir tipos `beneficiary` | `supporter`, `Need` e `CircleState` em `lib/types.ts` (FR1, FR3)
-  - [ ] 1.2 Implementar seed demo em `lib/demo-data.ts` (círculo + necessidades locais sem ir ao ledger)
-  - [ ] 1.3 Persistir estado em `localStorage` com chave `lifeline-demo-v1` em `lib/store.ts` (FR2)
-  - [ ] 1.4 Expor load/save + one-click reset que restaura o seed sem apagar secrets Midnight por engano (FR2, US9)
-  - [ ] 1.5 Garantir que description, creditor, amount e due date existem só no estado local (FR3)
-  - [ ] 1.6 Implementar switch de role na UI e forçar `supporter` ao abrir convite válido (FR1, US4)
+- [x] 1.0 Modelo local: roles, persistência, necessidades privadas e reset
+  - [x] 1.1 Definir tipos `beneficiary` | `supporter`, `Need` e `CircleState` em `lib/types.ts` (FR1, FR3)
+  - [x] 1.2 Implementar seed demo em `lib/demo-data.ts` (círculo + necessidades locais sem ir ao ledger)
+  - [x] 1.3 Persistir estado em `localStorage` com chave `lifeline-demo-v1` em `lib/store.ts` (FR2)
+  - [x] 1.4 Expor load/save + one-click reset que restaura o seed sem apagar secrets Midnight por engano (FR2, US9)
+    - Verified: `resetState()` removes only `lifeline-demo-v1`; secrets stay in `lifeline-midnight-member-secret-v1` / contract key
+  - [x] 1.5 Garantir que description, creditor, amount e due date existem só no estado local (FR3)
+    - Verified: `Need` keeps `title`/`amount`/`dueDate` local; ledger only gets commitments
+  - [x] 1.6 Implementar switch de role na UI e forçar `supporter` ao abrir convite válido (FR1, US4)
 
-- [ ] 2.0 Contrato Compact: circuitos, cap 1–100, nullifier e invariantes
-  - [ ] 2.1 Declarar ledger fields: `cycleId`, `cycleOpen`, `registeredNeeds`, `usedNullifiers`, `voteTotals`, `winningNeed`, etc. em `contracts/lifeline.compact`
-  - [ ] 2.2 Implementar `createCycle(newCycleId)` com assert de ciclo não aberto (FR6, Appx5)
-  - [ ] 2.3 Implementar `registerNeed(needCommitment)` só com ciclo aberto e commitment único (FR7, Appx1)
-  - [ ] 2.4 Implementar `memberNullifier(secret, cycleId)` e `castPrivateVote` com witnesses (FR10, Appx2–3)
-  - [ ] 2.5 Assertar peso `> 0` e `<= 100` no circuito (FR11, Appx4)
-  - [ ] 2.6 Rejeitar nullifier já consumido no ciclo (FR12, Appx3)
-  - [ ] 2.7 Implementar `closeCycle(winnerCommitment)` exigindo need registrado e fechando o ciclo (FR13, Appx5–6)
-  - [ ] 2.8 Espelhar invariantes em `lib/contract-model.ts` e cobrir com testes em `lib/contract-model.test.ts`
-  - [ ] 2.9 Compilar com `npm run midnight:compile` e versionar `contracts/managed/lifeline` (keys/ZKIR/bindings)
+- [x] 2.0 Contrato Compact: circuitos, cap 1–100, nullifier e invariantes
+  - [x] 2.1 Declarar ledger fields: `cycleId`, `cycleOpen`, `registeredNeeds`, `usedNullifiers`, `voteTotals`, `winningNeed`, etc. em `contracts/lifeline.compact`
+  - [x] 2.2 Implementar `createCycle(newCycleId)` com assert de ciclo não aberto (FR6, Appx5)
+  - [x] 2.3 Implementar `registerNeed(needCommitment)` só com ciclo aberto e commitment único (FR7, Appx1)
+  - [x] 2.4 Implementar `memberNullifier(secret, cycleId)` e `castPrivateVote` com witnesses (FR10, Appx2–3)
+  - [x] 2.5 Assertar peso `> 0` e `<= 100` no circuito (FR11, Appx4)
+  - [x] 2.6 Rejeitar nullifier já consumido no ciclo (FR12, Appx3)
+  - [x] 2.7 Implementar `closeCycle(winnerCommitment)` exigindo need registrado e fechando o ciclo (FR13, Appx5–6)
+  - [x] 2.8 Espelhar invariantes em `lib/contract-model.ts` e cobrir com testes em `lib/contract-model.test.ts`
+  - [x] 2.9 Compilar com `npm run midnight:compile` e versionar `contracts/managed/lifeline` (keys/ZKIR/bindings)
+    - Verified: `contracts/managed/lifeline/{compiler,contract,keys,zkir}` present
 
-- [ ] 3.0 Integração Midnight/Lace: deploy/join, circuitos, indexer e assets ZK
-  - [ ] 3.1 Configurar env (`VITE_LIFELINE_MODE`, `VITE_MIDNIGHT_NETWORK`, `VITE_LIFELINE_CONTRACT_ADDRESS`) em `lib/midnight-config.ts`
-  - [ ] 3.2 Conectar Lace via Connector API 4.x em `lib/midnight-wallet.ts` (FR5)
-  - [ ] 3.3 Implementar deploy/join do contrato no browser manager (FR5)
-  - [ ] 3.4 Derivar salted `Bytes<32>` commitment por necessidade antes de `registerNeed` (FR4)
-  - [ ] 3.5 Orquestrar publish: `createCycle` + `registerNeed` para cada commitment, com tx id real (FR6, FR7, Goal1)
-  - [ ] 3.6 Implementar `castPrivateVote` com secret local, need commitment e peso capped (FR10–12)
-  - [ ] 3.7 Implementar `closeCycle` com commitment vencedor registrado (FR13)
-  - [ ] 3.8 Assinar `state$` do indexer e refletir agregados na UI em modo Midnight (FR14)
-  - [ ] 3.9 Copiar keys/ZKIR para `public/` via script `midnight:assets` no build (FR18)
-  - [ ] 3.10 Documentar proof server `http://localhost:6300` e preflight (`scripts/midnight-preflight.sh`)
+- [x] 3.0 Integração Midnight/Lace: deploy/join, circuitos, indexer e assets ZK
+  - [x] 3.1 Configurar env (`VITE_LIFELINE_MODE`, `VITE_MIDNIGHT_NETWORK`, `VITE_LIFELINE_CONTRACT_ADDRESS`) em `lib/midnight-config.ts`
+  - [x] 3.2 Conectar Lace via Connector API 4.x em `lib/midnight-wallet.ts` (FR5)
+  - [x] 3.3 Implementar deploy/join do contrato no browser manager (FR5)
+  - [x] 3.4 Derivar salted `Bytes<32>` commitment por necessidade antes de `registerNeed` (FR4)
+  - [x] 3.5 Orquestrar publish: `createCycle` + `registerNeed` para cada commitment, com tx id real (FR6, FR7, Goal1)
+  - [x] 3.6 Implementar `castPrivateVote` com secret local, need commitment e peso capped (FR10–12)
+  - [x] 3.7 Implementar `closeCycle` com commitment vencedor registrado (FR13)
+  - [x] 3.8 Assinar `state$` do indexer e refletir agregados na UI em modo Midnight (FR14)
+  - [x] 3.9 Copiar keys/ZKIR para `public/` via script `midnight:assets` no build (FR18)
+  - [x] 3.10 Documentar proof server `http://localhost:6300` e preflight (`scripts/midnight-preflight.sh`)
+    - Verified: `proof-server/docker-compose.yml` maps 6300; runbook + README document Lace proof URL
 
-- [ ] 4.0 Fallback demo rotulado (`demo_*`) sem parecer on-chain
-  - [ ] 4.1 Implementar adapter local em `lib/proof.ts` quando Lace/Preprod indisponível (FR15)
-  - [ ] 4.2 Gerar recibos com prefixo `demo_*` e nunca rotulá-los como tx Midnight (FR15, Goal5)
-  - [ ] 4.3 Mostrar network strip inequívoco: Preprod+Lace vs demo local (Design)
-  - [ ] 4.4 Cobrir helpers de votação off-chain em `lib/voting.test.ts` (cap + winner)
+- [x] 4.0 Fallback demo rotulado (`demo_*`) sem parecer on-chain
+  - [x] 4.1 Implementar adapter local em `lib/proof.ts` quando Lace/Preprod indisponível (FR15)
+  - [x] 4.2 Gerar recibos com prefixo `demo_*` e nunca rotulá-los como tx Midnight (FR15, Goal5)
+    - Verified: network string `"Recibo local · não enviado à Midnight"`
+  - [x] 4.3 Mostrar network strip inequívoco: Preprod+Lace vs demo local (Design)
+  - [x] 4.4 Cobrir helpers de votação off-chain em `lib/voting.test.ts` (cap + winner)
 
-- [ ] 5.0 UI das jornadas: Overview, Needs, Voting, Results, Privacy, convite
-  - [ ] 5.1 Criar views Overview, Needs, Voting, Results e Privacy responsivas em `components/lifeline-app.tsx` (FR16)
-  - [ ] 5.2 Modal “Nova necessidade” gravando só localmente (US1, FR3)
-  - [ ] 5.3 CTA “Publicar na Preprod” com aprovação Lace e feedback de tx id (US2)
-  - [ ] 5.4 Gerar e copiar convite criptografado fragment-only (`lib/private-invite.ts`) sem enviar payload ao host (FR8, US3)
-  - [ ] 5.5 Testar encrypt/decrypt do convite em `lib/private-invite.test.ts` (FR8)
-  - [ ] 5.6 Modal de créditos demo sem valor econômico; peso exibido capped (FR9, US5)
-  - [ ] 5.7 Ação “Priorizar” no Voting; bloquear segundo voto e surfacer erro de nullifier (US5–6, FR12)
-  - [ ] 5.8 Encerrar ciclo (beneficiário) e mostrar commitment vencedor + recibo em Results (US7)
-  - [ ] 5.9 Página Privacy com matriz privado / provado / público (US8)
-  - [ ] 5.10 Toggle de valores protegidos na UI (FR17)
-  - [ ] 5.11 Touch targets usáveis no mobile para voto e CTAs principais (Design)
+- [x] 5.0 UI das jornadas: Overview, Needs, Voting, Results, Privacy, convite
+  - [x] 5.1 Criar views Overview, Needs, Voting, Results e Privacy responsivas em `components/lifeline-app.tsx` (FR16)
+  - [x] 5.2 Modal “Nova necessidade” gravando só localmente (US1, FR3)
+  - [x] 5.3 CTA “Publicar na Preprod” com aprovação Lace e feedback de tx id (US2)
+  - [x] 5.4 Gerar e copiar convite criptografado fragment-only (`lib/private-invite.ts`) sem enviar payload ao host (FR8, US3)
+  - [x] 5.5 Testar encrypt/decrypt do convite em `lib/private-invite.test.ts` (FR8)
+  - [x] 5.6 Modal de créditos demo sem valor econômico; peso exibido capped (FR9, US5)
+  - [x] 5.7 Ação “Priorizar” no Voting; bloquear segundo voto e surfacer erro de nullifier (US5–6, FR12)
+  - [x] 5.8 Encerrar ciclo (beneficiário) e mostrar commitment vencedor + recibo em Results (US7)
+  - [x] 5.9 Página Privacy com matriz privado / provado / público (US8)
+  - [x] 5.10 Toggle de valores protegidos na UI (FR17)
+  - [x] 5.11 Touch targets usáveis no mobile para voto e CTAs principais (Design)
+    - Verified: responsive shell + primary CTAs; media queries in `app/globals.css`
 
-- [ ] 6.0 Qualidade: testes, build e aceitação Preprod zero-vazamento
-  - [ ] 6.1 Garantir ≥7 testes passando com `npm test` (contract-model, voting, private-invite)
-  - [ ] 6.2 Garantir `npm run build` verde (inclui `midnight:assets` + `tsc --noEmit`)
+- [x] 6.0 Qualidade: testes, build e aceitação Preprod zero-vazamento
+  - [x] 6.1 Garantir ≥7 testes passando com `npm test` (contract-model, voting, private-invite)
+    - Verified 2026-07-19: **7 passed**
+  - [x] 6.2 Garantir `npm run build` verde (inclui `midnight:assets` + `tsc --noEmit`)
+    - Verified 2026-07-19: build preprod succeeded
   - [ ] 6.3 Executar checklist de `docs/PREPROD_RUNBOOK.md`: create → 4 needs → voto A → rejeição → voto B → close
+    - **Blocked:** requires Lace + tDUST + local proof server; human demo session
   - [ ] 6.4 Inspecionar ledger/indexer e confirmar 0 campos sensíveis (Goal4, Success Metrics)
+    - **Blocked:** depends on 6.3 live session
   - [ ] 6.5 Validar script de demo do README (8 passos) sem rotular `demo_*` como Midnight
+    - **Blocked:** depends on 6.3 live session (demo path without Lace is code-verified via 4.x)
+
+## Remaining work
+
+Complete **6.3 → 6.4 → 6.5** with a live Preprod session using `docs/PREPROD_RUNBOOK.md`, then check them off.
