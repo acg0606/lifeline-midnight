@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "version": "1.0",
+    "date": "2026-07-19",
+    "locale": "pt-BR",
+    "brand": "Lifeline",
+    "design_system": {
+      "source": "app-tokens",
+      "paths": ["src/vite.css", "components/lifeline-app.tsx"]
+    },
+    "sources": [
+      "docs/initiatives/lifeline-private-recovery-circle/prd/prd-lifeline-mvp.md",
+      "docs/company-level-context/product-vision-and-strategy/product-vision.md"
+    ]
+  },
+  "purpose": "Private financial recovery circle UI with clear privacy boundaries and verifiable collective prioritization.",
+  "audience": {
+    "primary": "Beneficiary under temporary financial hardship",
+    "secondary": "Trusted supporters invited to vote",
+    "personas": ["André Gomes (demo beneficiary)", "Trusted supporter"],
+    "context": "Mobile-first demo and Preprod judging sessions"
+  },
+  "tone": "calm, direct, dignified",
+  "brand_voice": {
+    "do": [
+      "Explain privacy in plain language",
+      "Label demo vs Preprod clearly",
+      "Center dignity over crypto hype"
+    ],
+    "dont": [
+      "Neon crypto aesthetics",
+      "Hide fallback mode",
+      "Shame the user for needing help"
+    ]
+  },
+  "variables": {
+    "color": {
+      "semantic": {
+        "action": "teal.sobrio",
+        "demo_warning": "amber",
+        "preprod_ok": "green",
+        "danger": "red.muted"
+      },
+      "neutral": {
+        "text_primary": "ink",
+        "bg_atmosphere": "soft.blue.gradient"
+      }
+    },
+    "typography": {
+      "family": { "sans": "Manrope", "serif": "Georgia" },
+      "sizes": { "display": 32, "title": 22, "body": 16, "caption": 13 },
+      "weights": { "regular": 400, "semibold": 600, "bold": 700 }
+    },
+    "spacing": { "xs": 4, "sm": 8, "md": 16, "lg": 24, "xl": 40 },
+    "radius": { "control": 10, "modal": 12 },
+    "elevation": { "modal": "soft-shadow" },
+    "motion": { "view_enter_ms": 200, "toast_ms": 250 }
+  },
+  "components": [
+    {
+      "name": "NetworkStatusStrip",
+      "library_ref": "Status/NetworkStrip",
+      "variants": ["preprod", "demo"],
+      "props": ["networkLabel", "walletConnected"],
+      "content_guidelines": "Never imply demo receipts are on-chain",
+      "interactions": ["connect_lace"]
+    },
+    {
+      "name": "NeedFormModal",
+      "library_ref": "Modal/NeedCreate",
+      "variants": ["create"],
+      "props": ["title", "category", "amount", "dueDate", "impact"],
+      "content_guidelines": "Local-only fields; say so near submit",
+      "interactions": ["submit", "cancel"]
+    },
+    {
+      "name": "VoteList",
+      "library_ref": "List/NeedVote",
+      "variants": ["open", "closed"],
+      "props": ["needs", "userRole", "votedNeedId"],
+      "content_guidelines": "One primary action: Priorizar",
+      "interactions": ["cast_vote"]
+    }
+  ],
+  "patterns": [
+    "publish_cycle",
+    "invite_supporter",
+    "cast_private_vote",
+    "close_cycle",
+    "privacy_explainer"
+  ],
+  "channels": {
+    "ads": { "formats": [], "rules": ["out of scope for MVP"] },
+    "branding": { "rules": ["Private support. Collective decisions."] },
+    "social": { "formats": ["demo video stills"], "rules": ["show privacy page"] },
+    "prototype": {
+      "flows": ["beneficiary", "supporter", "privacy"],
+      "transitions": ["view_fade"]
+    }
+  },
+  "deliverables": [
+    "Responsive web app",
+    "Privacy explainer page",
+    "Figma prompt for polish exploration"
+  ],
+  "a11y": {
+    "contrast": "WCAG 2.2 AA",
+    "min_touch": 44,
+    "focus_visible": true,
+    "rtl": false,
+    "keyboard_navigation": true
+  },
+  "naming": {
+    "components": "PascalCase",
+    "tokens": "dot.case"
+  },
+  "file_structure": {
+    "ui": "components/lifeline-app.tsx",
+    "styles": "src/vite.css"
+  },
+  "metrics": {
+    "primary": "demo_script_task_success",
+    "secondary": "supporter_vote_completion_without_moderator",
+    "success_criteria": [
+      "8-step demo completable from README",
+      ">=3/5 supporters complete vote in usability test"
+    ]
+  },
+  "assets": {
+    "icons": "lucide-react",
+    "imagery": "human recovery atmosphere, not trading charts"
+  }
+}
