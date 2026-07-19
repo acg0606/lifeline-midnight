@@ -30,6 +30,7 @@
     "src/**/*.tsx",
     "components/**/*.tsx",
     "lib/**/*.ts",
+    "lib/**/*.tsx",
     "contracts/src/**/*.ts",
     "contracts/managed/**/*.d.ts",
     "vite.config.ts"

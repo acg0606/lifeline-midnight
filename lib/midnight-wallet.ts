@@ -22,7 +22,7 @@ export async function connectMidnightWallet(): Promise<WalletConnection> {
   const lace = wallets.find((wallet) => wallet && typeof wallet.connect === "function");
 
   if (!lace) {
-    return { mode: "demo", label: "Demo local", network: "demo" };
+    return { mode: "demo", label: "", network: "demo" };
   }
 
   const connected = await lace.connect("preprod");
@@ -34,7 +34,7 @@ export async function connectMidnightWallet(): Promise<WalletConnection> {
 
   return {
     mode: "lace",
-    label: publicKey ? `${publicKey.slice(0, 7)}…${publicKey.slice(-4)}` : "Lace conectada",
+    label: publicKey ? `${publicKey.slice(0, 7)}…${publicKey.slice(-4)}` : "",
     network: configuration.networkId ?? "preprod",
     proofServer: configuration.proverServerUri,
   };

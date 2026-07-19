@@ -18,7 +18,7 @@ export const inMemoryPrivateStateProvider = <PSI extends PrivateStateId, PS = un
   let contractAddress: ContractAddress | null = null;
 
   const requireContractAddress = (): ContractAddress => {
-    if (contractAddress === null) throw new Error("Endereço do contrato ainda não foi configurado.");
+    if (contractAddress === null) throw new Error("Contract address has not been configured yet.");
     return contractAddress;
   };
 
@@ -95,7 +95,7 @@ export const inMemoryPrivateStateProvider = <PSI extends PrivateStateId, PS = un
             skipped++;
             continue;
           }
-          if (strategy === "error") return Promise.reject(new Error(`Conflito no estado privado: ${id}`));
+          if (strategy === "error") return Promise.reject(new Error(`Private state conflict: ${id}`));
           overwritten++;
         } else {
           imported++;
@@ -123,7 +123,7 @@ export const inMemoryPrivateStateProvider = <PSI extends PrivateStateId, PS = un
             skipped++;
             continue;
           }
-          if (strategy === "error") return Promise.reject(new Error(`Conflito de chave: ${address}`));
+          if (strategy === "error") return Promise.reject(new Error(`Key conflict: ${address}`));
           overwritten++;
         } else {
           imported++;

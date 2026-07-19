@@ -46,7 +46,7 @@ const connectToWallet = async (): Promise<ConnectedAPI> => {
       timeout({ first: 5_000 }),
     ),
   ).catch(() => {
-    throw new Error("A Lace compatível com Midnight Connector 4.x não foi encontrada.");
+    throw new Error("No Lace wallet compatible with Midnight Connector 4.x was found.");
   });
   return initialAPI.connect(NETWORK_ID);
 };
@@ -64,7 +64,7 @@ const initializeProviders = async (): Promise<LifelineProviders> => {
   const connectedAPI = await connectToWallet();
   const configuration = await connectedAPI.getConfiguration();
   const proofServerUri = configuration.proverServerUri;
-  if (!proofServerUri) throw new Error("A Lace não informou a URL do proof server local.");
+  if (!proofServerUri) throw new Error("Lace did not provide the local proof server URL.");
   const addresses = await connectedAPI.getShieldedAddresses();
   const zkConfigProvider = new FetchZkConfigProvider<LifelineCircuitKey>(window.location.origin, fetch.bind(window));
 

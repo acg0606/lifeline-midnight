@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { initialState } from "./demo-data";
 import { createPrivateInvite, readPrivateInvite } from "./private-invite";
 
-describe("convites privados", () => {
-  it("criptografa o círculo no fragmento e recupera os dados", async () => {
+describe("private invites", () => {
+  it("encrypts the circle in the fragment and recovers the data", async () => {
     const url = await createPrivateInvite(initialState, "contract_test_123", "https://lifeline.example/app");
     expect(url).toContain("#lifeline=");
     expect(url).not.toContain(initialState.needs[0].title);
@@ -13,7 +13,7 @@ describe("convites privados", () => {
     expect(invite?.contractAddress).toBe("contract_test_123");
   });
 
-  it("ignora páginas sem convite", async () => {
+  it("ignores pages without an invite", async () => {
     await expect(readPrivateInvite("#outro=valor")).resolves.toBeNull();
   });
 });
