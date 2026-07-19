@@ -1,0 +1,27 @@
+{
+  "product": "Lifeline",
+  "owner": "Product",
+  "review_window": { "start": "2026-06-01", "end": "2026-07-19" },
+  "evidence_hub": "docs/initiatives/lifeline-private-recovery-circle/",
+  "gate": "PROCEED",
+  "decision": "Conditional Approve",
+  "prism": {
+    "problem_diagnosis": 3.5,
+    "reframe_opportunity": 4.0,
+    "intentional_bets": 4.0,
+    "systemized_execution": 3.0,
+    "momentum": 3.0,
+    "overall": 3.5
+  },
+  "riskiest_assumptions": [
+    "A1_desirability_circle_over_public_crowdfunding",
+    "A2_supporters_complete_lace_vote_flow",
+    "A3_opaque_commitments_are_trustworthy_enough"
+  ],
+  "kill_switches": [
+    "Fewer than 3 successful Preprod demos in a 2-week judge/pilot window",
+    "Any sensitive field observed in ledger/indexer inspection",
+    "Economic rail introduced before desirability LoFA pass"
+  ],
+  "next_review": "2026-08-15"
+}

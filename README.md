@@ -24,6 +24,10 @@ Lifeline is a privacy-first financial recovery circle built for the 2026 MLH Mid
 
 Lifeline targets the **Midnight DeFi Track**. Its core contract is [`contracts/lifeline.compact`](contracts/lifeline.compact), and the complete submission narrative is in [`docs/HACKATHON_SUBMISSION.md`](docs/HACKATHON_SUBMISSION.md).
 
+## Product docs
+
+Product management workspace (vision, OKRs, PRD, discovery, tasks): [`docs/README.md`](docs/README.md).
+
 ## Scope and honest boundaries
 
 With Lace on Preprod, the interface deploys or joins the real Compact contract and presents finalized transaction identifiers. Without Lace, it remains an explicitly labelled local fallback and never labels a demo receipt as an on-chain transaction.
