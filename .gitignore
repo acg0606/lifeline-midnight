@@ -1,12 +1,44 @@
-node_modules
-.next
-.vercel
-.env*.local
-.midnight-state.json
-coverage
-*.log
+# Dependencies
+node_modules/
 
-dist
-public/keys
-public/zkir
+# Build outputs
+dist/
+.next/
+.vercel/
+*.tsbuildinfo
+
+# Vite cache (prebundled deps)
+.vite/
+
+# Compact / Midnight build artifacts copied into the static site
+public/keys/
+public/zkir/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+.midnight-state.json
+
+# Logs, coverage, archives
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
 *.zip
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Local Cursor for Product Managers plugin clones (not part of the app)
+Cursor-for-Product-Managers/
+Cursor-for-Product-Managers-main*/
