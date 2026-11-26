@@ -1,0 +1,31 @@
+{
+  "name": "lifeline-stellar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "fixture": "node scripts/fixture.mjs",
+    "zk:build": "ctg zk build main --embed-vk",
+    "zk:prove": "ctg zk prove main",
+    "build": "ctg build verifier",
+    "test": "node --test tests/*.test.mjs",
+    "test:proof": "node scripts/check-proof.mjs",
+    "demo:testnet": "node scripts/testnet.mjs",
+    "dev": "vite",
+    "web:build": "vite build --base=./"
+  },
+  "devDependencies": {
+    "@caatinga/cli": "3.14.0",
+    "@caatinga/core": "3.14.0",
+    "@caatinga/zk": "3.14.0",
+    "snarkjs": "0.7.6",
+    "vite": "7.3.1"
+  },
+  "dependencies": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}

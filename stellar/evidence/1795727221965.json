@@ -1,0 +1,46 @@
+{
+  "network": "testnet",
+  "contractId": "CBOZV4IIHUKP4W66W3Y2UTOCTBWQYZLZ4YXNDSRGDCJK3I2UDWUC4QEQ",
+  "cycle": 1795727221965,
+  "tally": [
+    12,
+    0
+  ],
+  "receipts": [
+    {
+      "label": "open",
+      "method": "open_round",
+      "hash": "7c53d82bc221bc95d36937ca079fc4f195dbed828f4d7adaa406b8b964b08411",
+      "ledger": 5940765,
+      "result": null
+    },
+    {
+      "label": "valid",
+      "method": "cast_vote",
+      "hash": "52229918d549930a43826ca962348b3258faf183bc5927427aa59f4582fc29d7",
+      "ledger": 5940769,
+      "result": "Counted"
+    },
+    {
+      "label": "invalid",
+      "method": "cast_vote",
+      "hash": "5f54ad9c61e3c589d3880b8fb82ad8465a7beaf41c295ac7cddafc658e86118b",
+      "ledger": 5940771,
+      "result": "InvalidProof"
+    },
+    {
+      "label": "repeat",
+      "method": "cast_vote",
+      "hash": "6437581d7f8a4f9687cb0e9adfe47e614bcedc3042b204575628f39d0c117a1c",
+      "ledger": 5940773,
+      "result": "AlreadyVoted"
+    },
+    {
+      "label": "close",
+      "method": "close_round",
+      "hash": "acd9f5e603db84c80fff5cb96cdc6f6f7a53e5a87c50a5e942f05f09ceef512a",
+      "ledger": 5940774,
+      "result": null
+    }
+  ]
+}

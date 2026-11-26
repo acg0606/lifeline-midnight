@@ -1,0 +1,28 @@
+name: Lifeline Stellar
+on:
+  push:
+    paths: ['stellar/**', '.github/workflows/stellar.yml']
+  pull_request:
+    paths: ['stellar/**', '.github/workflows/stellar.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: stellar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: stellar/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run fixture
+      - run: npm run zk:build
+      - run: npm run zk:prove
+      - run: npm run test:proof
+      - run: npm run web:build

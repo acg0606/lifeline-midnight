@@ -1,0 +1,32 @@
+{
+  "project": "lifeline-stellar",
+  "networks": {
+    "testnet": {
+      "contracts": {
+        "verifier": {
+          "contractId": "CBOZV4IIHUKP4W66W3Y2UTOCTBWQYZLZ4YXNDSRGDCJK3I2UDWUC4QEQ",
+          "wasmHash": "60dde0263a727fba31ef4b49ba6b9012227892d247f44fb5990a01703120759f",
+          "deployedAt": "2026-11-26T21:10:21.447Z",
+          "sourcePath": "./contracts/verifier",
+          "wasmPath": "./contracts/verifier/target/wasm32v1-none/release/verifier.wasm",
+          "dependencies": [],
+          "resolvedDeployArgs": {
+            "admin": "GCX7GWMWCHF2M3X7B2JDQMG3MVKYQ47VNB2V3OETVVPIPQRKVJSLUHJP"
+          },
+          "metadata": {
+            "gitCommit": "de219320539f624cd73ea520b9c7866970e7021b",
+            "rustcVersion": "rustc 1.91.1 (ed61e7d7e 2025-11-07)",
+            "caatingaVersion": "3.14.0",
+            "network": "testnet",
+            "timestamp": "2026-11-26T21:10:21.441Z",
+            "checksum": "60dde0263a727fba31ef4b49ba6b9012227892d247f44fb5990a01703120759f"
+          }
+        }
+      },
+      "dependencyGraph": {
+        "verifier": []
+      }
+    }
+  },
+  "version": 2
+}

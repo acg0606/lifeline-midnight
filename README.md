@@ -4,6 +4,10 @@
 
 Lifeline is a privacy-first financial recovery circle built for the 2026 MLH Midnight Hackathon. A beneficiary shares selected needs with trusted supporters, supporters contribute demo credits and cast capped, weighted votes, and the group produces a verifiable decision without publishing financial or social data.
 
+## Stellar / Caatinga edition
+
+The [Stellar workspace](stellar/README.md) contains the original Circom voting circuit, Soroban verifier, browser proof demo and testnet reproduction instructions for the Caatinga bounty.
+
 ## What works
 
 - Beneficiary and supporter journeys
